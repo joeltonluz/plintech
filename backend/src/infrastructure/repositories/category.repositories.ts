@@ -24,7 +24,11 @@ export class DatabaseCategoryRepository implements CategoryRepository {
   }
 
   async findAll(): Promise<CategoryM[]> {
-    const result = await this.prismaService.category.findMany();
+    const result = await this.prismaService.category.findMany({
+      include: {
+        products: true,
+      },
+    });
 
     return result;
   }

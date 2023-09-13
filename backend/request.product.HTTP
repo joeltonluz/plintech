@@ -1,7 +1,7 @@
 ### VARIABLES
 @apiUrl = http://localhost:3000
-@idCategory = "6501f5c219cbfa9b999cc7a6"
-@idProductUrl = 6501f5cb19cbfa9b999cc7a7
+@idCategory = "6501f88813f44bfa562947ad"
+@idProductUrl = 6501f89313f44bfa562947ae
 
 ###
 GET {{apiUrl}}/product
@@ -33,4 +33,4 @@ content-type: application/json
 }
 
 ###
-DELETE {{apiUrl}}/product/8937f6ae-1777-49e7-af42-9a545c7b10c1
+DELETE {{apiUrl}}/product/{{idProductUrl}}

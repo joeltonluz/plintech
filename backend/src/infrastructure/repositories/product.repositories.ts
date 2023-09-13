@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ProductRepository } from 'src/domain/repositories';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { ProductM } from 'src/domain/model';
-import * as crypto from 'crypto';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 
 @Injectable()
@@ -27,7 +26,6 @@ export class DatabaseProductRepository implements ProductRepository {
         message: 'category must be valid',
       });
 
-    const newId = crypto.randomUUID();
     const result = await this.prismaService.product.create({
       data: {
         ...product,
@@ -38,7 +36,11 @@ export class DatabaseProductRepository implements ProductRepository {
   }
 
   async findAll(): Promise<ProductM[]> {
-    const result = await this.prismaService.product.findMany();
+    const result = await this.prismaService.product.findMany({
+      include: {
+        category: true,
+      },
+    });
 
     return result;
   }
