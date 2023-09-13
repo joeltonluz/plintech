@@ -1,6 +1,6 @@
 ### VARIABLES
 @apiUrl = http://localhost:3000
-@idMenu = 65022c6886f51d3aebf3d4e4
+@idMenu = 65023d7122e21ffcf10da9c4
 
 
 ### GET LIST OF MENU
@@ -14,7 +14,7 @@ POST {{apiUrl}}/menu
 content-type: application/json
 
 {
-    "period": "NIGHT",
+    "period": "NIGHT", 
     "products": [
         "650201a12f9694f46ee25855",
         "650201b02f9694f46ee25856",
@@ -22,13 +22,17 @@ content-type: application/json
     ]
 }
 
-### UPDATE ONE CATEGORY
-PUT {{apiUrl}}/category/{{idMenu}}
+### UPDATE ONE MENU
+PUT {{apiUrl}}/menu/{{idMenu}}
 content-type: application/json
 
 {
-    "name": "Drinks"
+    "period": "NIGHT",
+    "products": [
+        "650201a12f9694f46ee25855",
+        "65020a3d4d35188f5d8c5e5a"
+    ]
 }
 
 ### DELETE ONE CATEGORY
-DELETE {{apiUrl}}/category/{{idMenu}}
+DELETE {{apiUrl}}/menu/{{idMenu}}

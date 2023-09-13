@@ -8,6 +8,7 @@ import {
   DeleteMenuUseCase,
   GetMenuUseCase,
   GetMenusUseCase,
+  UpdateMenuUseCase,
 } from '../menu';
 
 @Module({
@@ -17,6 +18,7 @@ export class MenuFactoryModule {
   static ADD_MENU = 'addMenu';
   static GET_MENUS = 'getMenus';
   static GET_MENU = 'getMenu';
+  static PUT_MENU = 'putMenu';
   static DEL_MENU = 'delMenu';
 
   static register(): DynamicModule {
@@ -49,6 +51,14 @@ export class MenuFactoryModule {
         },
         {
           inject: [LoggerService, DatabaseMenuRepository],
+          provide: MenuFactoryModule.PUT_MENU,
+          useFactory: (
+            logger: LoggerService,
+            menuRepository: DatabaseMenuRepository,
+          ) => new UpdateMenuUseCase(logger, menuRepository),
+        },
+        {
+          inject: [LoggerService, DatabaseMenuRepository],
           provide: MenuFactoryModule.DEL_MENU,
           useFactory: (
             logger: LoggerService,
@@ -60,6 +70,7 @@ export class MenuFactoryModule {
         MenuFactoryModule.ADD_MENU,
         MenuFactoryModule.GET_MENUS,
         MenuFactoryModule.GET_MENU,
+        MenuFactoryModule.PUT_MENU,
         MenuFactoryModule.DEL_MENU,
       ],
     };

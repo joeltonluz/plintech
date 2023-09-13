@@ -6,6 +6,7 @@ import {
   Inject,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { MenuFactoryModule } from 'src/usecases/factories/menu-factory.module';
 import {
@@ -13,8 +14,9 @@ import {
   DeleteMenuUseCase,
   GetMenuUseCase,
   GetMenusUseCase,
+  UpdateMenuUseCase,
 } from 'src/usecases/menu';
-import { AddMenuDto } from './dto/menu.dto';
+import { AddMenuDto, ProductsMenuDto } from './dto/menu.dto';
 
 @Controller('menu')
 export class MenuController {
@@ -25,6 +27,8 @@ export class MenuController {
     private readonly getMenusUc: GetMenusUseCase,
     @Inject(MenuFactoryModule.GET_MENU)
     private readonly getMenuUc: GetMenuUseCase,
+    @Inject(MenuFactoryModule.PUT_MENU)
+    private readonly updateMenuUc: UpdateMenuUseCase,
     @Inject(MenuFactoryModule.DEL_MENU)
     private readonly deleteMenuUc: DeleteMenuUseCase,
   ) {}
@@ -46,6 +50,12 @@ export class MenuController {
   async getMenu(@Param('id') id: string) {
     const result = await this.getMenuUc.execute(id);
     return result;
+  }
+
+  @Put(':id')
+  async updateMenu(@Param('id') id: string, @Body() menu: ProductsMenuDto) {
+    menu.id = id;
+    return await this.updateMenuUc.execute(menu);
   }
 
   @Delete(':id')

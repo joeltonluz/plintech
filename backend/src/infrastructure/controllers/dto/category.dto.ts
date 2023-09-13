@@ -1,7 +1,8 @@
-import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsObjectId } from 'class-validator-mongo-object-id';
 
 export class CategoryDto {
-  @IsUUID()
+  @IsObjectId()
   id: string;
   @IsNotEmpty({ message: 'name is required.' })
   name: string;

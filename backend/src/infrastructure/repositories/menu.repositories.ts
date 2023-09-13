@@ -110,8 +110,6 @@ export class DatabaseMenuRepository implements MenuRepository {
       },
     });
 
-    console.log('products', resultProducts);
-
     const result: any = {
       id: resultMenu.id,
       period: resultMenu.period,
@@ -119,6 +117,25 @@ export class DatabaseMenuRepository implements MenuRepository {
     };
 
     return result;
+  }
+
+  async updateContent(menu: MenuM): Promise<MenuM> {
+    await this.prismaService.productsInMenus.deleteMany({
+      where: {
+        menuId: menu.id,
+      },
+    });
+
+    for (const product of menu.products) {
+      await this.prismaService.productsInMenus.create({
+        data: {
+          menuId: menu.id,
+          productId: product,
+        },
+      });
+    }
+
+    return await this.findById(menu.id);
   }
 
   async deleteById(id: string): Promise<void> {

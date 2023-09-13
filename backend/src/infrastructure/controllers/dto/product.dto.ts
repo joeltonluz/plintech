@@ -1,8 +1,9 @@
-import { IsNotEmpty, IsOptional, IsUUID, Validate } from 'class-validator';
+import { IsNotEmpty, IsOptional, Validate } from 'class-validator';
+import { IsObjectId } from 'class-validator-mongo-object-id';
 import { IsValidPrice } from 'src/infrastructure/common/decorators/is-valid-price';
 
 export class ProductDto {
-  @IsUUID()
+  @IsObjectId()
   id: string;
   @IsNotEmpty({ message: 'name is required' })
   name: string;
