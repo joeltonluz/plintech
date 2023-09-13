@@ -12,4 +12,12 @@ export class DatabaseProductRepository implements ProductRepository {
 
     return result;
   }
+
+  async findById(id: string): Promise<ProductM> {
+    const result = await this.prismaService.product.findUnique({
+      where: { id },
+    });
+
+    return result;
+  }
 }
