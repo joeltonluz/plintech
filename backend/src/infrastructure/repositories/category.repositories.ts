@@ -3,7 +3,6 @@ import { CategoryRepository } from 'src/domain/repositories';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { CategoryM } from 'src/domain/model';
 import * as crypto from 'crypto';
-import { DatabaseProductRepository } from './product.repositories';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 
 @Injectable()
@@ -17,14 +16,11 @@ export class DatabaseCategoryRepository implements CategoryRepository {
     const newId = crypto.randomUUID();
     const result = await this.prismaService.category.create({
       data: {
-        id: newId,
         name: categoryName,
       },
     });
 
-    console.log('Result', result);
-
-    return await this.findById(newId);
+    return result;
   }
 
   async findAll(): Promise<CategoryM[]> {
@@ -69,11 +65,10 @@ export class DatabaseCategoryRepository implements CategoryRepository {
         message: 'there are linked products',
       });
 
-    const result = await this.prismaService.category.delete({
+    await this.prismaService.category.delete({
       where: { id },
     });
 
-    console.log('Result Delte', result);
     return;
   }
 }

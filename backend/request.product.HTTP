@@ -1,34 +1,34 @@
 ### VARIABLES
 @apiUrl = http://localhost:3000
-@idCategory = bfa3731d-50af-4aea-90fc-09f2de2cc9bd
-@idProduct = asdf
+@idCategory = "6501f5c219cbfa9b999cc7a6"
+@idProductUrl = 6501f5cb19cbfa9b999cc7a7
 
 ###
 GET {{apiUrl}}/product
 
 ###
-GET {{apiUrl}}/product/{{idProduct}}
+GET {{apiUrl}}/product/{{idProductUrl}}
 
 ###
 POST {{apiUrl}}/product
 content-type: application/json
 
 {
-    "name": "Lily McBride",
-    "price": "3212.25",
-    "description": "jpW1ZrfZBXld0mkd3h8gaaOQL3dyuW1uAqHiXP1VnBN87UzVmY",
+    "name": "Big Burrito",
+    "price": "9.00",
+    "description": "MAeMvLFTuD4xE8iZKL79",
     "categoryId": {{idCategory}}
 }
 
 ###
-PUT {{apiUrl}}/product/{{idProduct}}
+PUT {{apiUrl}}/product/{{idProductUrl}}
 content-type: application/json
 
 {
-    "name": "Produto alterado",
-    "price": "3212.25",
+    "name": "Standar",
+    "price": "7.00",
     "image": null,
-    "description": "_jpW1ZrfZBXld0mkd3h8gaaOQL3dyuW1uAqHiXP1VnBN87UzVmY",
+    "description": "jpW1ZrfZBXld0mkd3h8gaaOQL3dyuW1uAqHiXP1VnBN87UzVmY",
     "categoryId": {{idCategory}}
 }
 

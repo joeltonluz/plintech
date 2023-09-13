@@ -30,7 +30,6 @@ export class DatabaseProductRepository implements ProductRepository {
     const newId = crypto.randomUUID();
     const result = await this.prismaService.product.create({
       data: {
-        id: newId,
         ...product,
       },
     });

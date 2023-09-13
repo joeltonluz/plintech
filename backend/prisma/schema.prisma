@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Category {
-  id        String    @id @map("_id")
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String    @unique
   products  Product[]
   createdAt DateTime  @default(now())
@@ -19,17 +19,17 @@ model Category {
 }
 
 model Product {
-  id          String   @id @map("_id")
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   price       String //Decimal Field MongoDB https://github.com/prisma/prisma/issues/12637
   image       String?
   description String
   category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  String
+  categoryId  String   @db.ObjectId
 }
 
 model Menu {
-  id     String     @id @map("_id")
+  id     String     @id @default(auto()) @map("_id") @db.ObjectId
   period PeriodMenu @unique @default(DAY)
 }
 
