@@ -9,6 +9,7 @@ export class CategoryGetAll {
   ) {}
 
   async execute(): Promise<CategoryM[]> {
+    this.logger.log('Gett', 'all');
     return await this.categoryRepository.findAll();
   }
 }
