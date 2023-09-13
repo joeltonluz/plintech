@@ -8,7 +8,7 @@ export class DeleteCategoryUseCase {
   ) {}
 
   async execute(id: string): Promise<void> {
-    this.logger.log('Delete UseCase', `Deleting a Category ${id} `);
+    this.logger.log('Category UseCase', `Deleting a Category ${id} `);
     return await this.categoryRepository.deleteById(id);
   }
 }

@@ -9,7 +9,7 @@ export class UpdateCategoryUseCase {
   ) {}
 
   async execute(id: string, name: string): Promise<CategoryM> {
-    this.logger.log('Update UseCase', `Updating a Category ${id} `);
+    this.logger.log('Category UseCase', `Updating a Category ${id} `);
     return await this.categoryRepository.updateContent(id, name);
   }
 }
