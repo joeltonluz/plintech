@@ -18,13 +18,8 @@ import {
   UpdateCategoryUseCase,
 } from 'src/usecases/category';
 import { CategoryFactoryModule } from 'src/usecases/factories/category-factory.module';
+import { AddCategoryDto } from './dto/category.dto';
 
-type CategoryDto = {
-  id: string;
-  name: string;
-};
-
-type AddCategoryDto = Omit<CategoryDto, 'id'>;
 @Controller('category')
 export class CategoryController {
   constructor(
@@ -60,7 +55,10 @@ export class CategoryController {
   }
 
   @Put(':id')
-  async PutCategory(@Param('id') id: string, @Body() categoryDto: CategoryDto) {
+  async PutCategory(
+    @Param('id') id: string,
+    @Body() categoryDto: AddCategoryDto,
+  ) {
     const result = this.updateCategory.execute(id, categoryDto.name);
     return result;
   }
