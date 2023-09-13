@@ -11,6 +11,17 @@ datasource db {
 }
 
 model Category {
-  id   String @id @map("_id")
-  name String
+  id       String    @id @map("_id")
+  name     String
+  products Product[]
+}
+
+model Product {
+  id          String   @id @map("_id")
+  name        String
+  price       String //Decimal Field MongoDB https://github.com/prisma/prisma/issues/12637
+  image       String?
+  description String
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
 }
