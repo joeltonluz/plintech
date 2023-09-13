@@ -3,10 +3,14 @@ import { CategoryRepository } from 'src/domain/repositories';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { CategoryM } from 'src/domain/model';
 import * as crypto from 'crypto';
+import { DatabaseProductRepository } from './product.repositories';
 
 @Injectable()
 export class DatabaseCategoryRepository implements CategoryRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly teste: DatabaseProductRepository,
+    private readonly prismaService: PrismaService,
+  ) {}
 
   async insert(categoryName: string): Promise<CategoryM> {
     const newId = crypto.randomUUID();
@@ -29,11 +33,21 @@ export class DatabaseCategoryRepository implements CategoryRepository {
   }
 
   async findById(id: string): Promise<CategoryM> {
-    const result = await this.prismaService.category.findUnique({
+    // const resultCategory = await this.prismaService.category.findUnique({
+    //   where: { id },
+    // });
+    const resultCategory = await this.prismaService.category.findUnique({
       where: { id },
+      include: {
+        products: true,
+      },
     });
 
-    return result;
+    //const resultProductsCategory = await this.teste.findAll();
+
+    console.log('productsCategory');
+
+    return resultCategory;
   }
 
   async updateContent(id: string, name: string): Promise<CategoryM> {

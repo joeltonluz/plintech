@@ -9,7 +9,7 @@ export class GetCategoriesUseCase {
   ) {}
 
   async execute(): Promise<CategoryM[]> {
-    this.logger.log('FindAll UseCase', `Find all Categories`);
+    this.logger.log('FindAll UseCase', `Finding all Categories`);
     return await this.categoryRepository.findAll();
   }
 }
