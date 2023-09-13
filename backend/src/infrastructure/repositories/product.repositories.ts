@@ -39,7 +39,6 @@ export class DatabaseProductRepository implements ProductRepository {
     const result = await this.prismaService.product.findMany({
       include: {
         category: true,
-        menus: true,
       },
     });
 

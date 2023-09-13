@@ -37,7 +37,7 @@ model Product {
 
 model Menu {
   id        String            @id @default(auto()) @map("_id") @db.ObjectId
-  period    PeriodMenu        @unique
+  period    String            @unique
   products  ProductsInMenus[]
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
@@ -51,9 +51,4 @@ model ProductsInMenus {
   menuId    String  @db.ObjectId
 
   //   @@index([productId, menuId]) mongoose dont' work with @@id two id's
-}
-
-enum PeriodMenu {
-  DAY
-  NIGHT
 }
