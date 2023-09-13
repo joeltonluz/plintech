@@ -4,12 +4,13 @@ import { PrismaService } from '../database/prisma/prisma.service';
 import { CategoryM } from 'src/domain/model';
 import * as crypto from 'crypto';
 import { DatabaseProductRepository } from './product.repositories';
+import { ExceptionsService } from '../exceptions/exceptions.service';
 
 @Injectable()
 export class DatabaseCategoryRepository implements CategoryRepository {
   constructor(
-    private readonly teste: DatabaseProductRepository,
     private readonly prismaService: PrismaService,
+    private readonly exceptionService: ExceptionsService,
   ) {}
 
   async insert(categoryName: string): Promise<CategoryM> {
@@ -57,15 +58,22 @@ export class DatabaseCategoryRepository implements CategoryRepository {
   }
 
   async deleteById(id: string): Promise<void> {
-    try {
-      const result = await this.prismaService.category.delete({
-        where: { id },
+    const hasProducts = await this.prismaService.product.findMany({
+      where: {
+        categoryId: id,
+      },
+    });
+
+    if (!!hasProducts.length)
+      this.exceptionService.badRequestException({
+        message: 'there are linked products',
       });
 
-      console.log('Result Delte', result);
-      return;
-    } catch (erro) {
-      throw erro;
-    }
+    const result = await this.prismaService.category.delete({
+      where: { id },
+    });
+
+    console.log('Result Delte', result);
+    return;
   }
 }
