@@ -5,9 +5,11 @@ import { DatabaseProductRepository } from 'src/infrastructure/repositories/produ
 import { RepositoriesModule } from 'src/infrastructure/repositories/repositories.module';
 import {
   AddProductUseCase,
+  DeleteProductUseCase,
   GetProductUseCase,
   GetProductsUseCase,
 } from '../product';
+import { UpdateProductUseCase } from '../product/updateProduct.usecase';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule],
@@ -16,6 +18,8 @@ export class ProductFactoryModule {
   static ADD_PRODUCT = 'addProduct';
   static GET_PRODUCTS = 'getProducts';
   static GET_PRODUCT = 'getProduct';
+  static PUT_PRODUCT = 'putProduct';
+  static DEL_PRODUCT = 'delProduct';
 
   static register(): DynamicModule {
     return {
@@ -45,11 +49,29 @@ export class ProductFactoryModule {
             productRepository: DatabaseProductRepository,
           ) => new GetProductUseCase(logger, productRepository),
         },
+        {
+          inject: [LoggerService, DatabaseProductRepository],
+          provide: ProductFactoryModule.PUT_PRODUCT,
+          useFactory: (
+            logger: LoggerService,
+            productRepository: DatabaseProductRepository,
+          ) => new UpdateProductUseCase(logger, productRepository),
+        },
+        {
+          inject: [LoggerService, DatabaseProductRepository],
+          provide: ProductFactoryModule.DEL_PRODUCT,
+          useFactory: (
+            logger: LoggerService,
+            productRepository: DatabaseProductRepository,
+          ) => new DeleteProductUseCase(logger, productRepository),
+        },
       ],
       exports: [
         ProductFactoryModule.ADD_PRODUCT,
         ProductFactoryModule.GET_PRODUCTS,
         ProductFactoryModule.GET_PRODUCT,
+        ProductFactoryModule.PUT_PRODUCT,
+        ProductFactoryModule.DEL_PRODUCT,
       ],
     };
   }

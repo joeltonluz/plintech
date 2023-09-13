@@ -3,17 +3,29 @@ import { ProductRepository } from 'src/domain/repositories';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { ProductM } from 'src/domain/model';
 import * as crypto from 'crypto';
+import { ExceptionsService } from '../exceptions/exceptions.service';
 
 @Injectable()
 export class DatabaseProductRepository implements ProductRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly exceptionService: ExceptionsService,
+  ) {}
 
-  async insert(product: ProductM): Promise<ProductM> {
-    const IsValidCategory = await this.prismaService.category.findUnique({
-      where: { id: product.categoryId },
+  async isValidCategory(id: string) {
+    const result = await this.prismaService.category.findUnique({
+      where: { id },
     });
 
-    if (!IsValidCategory) throw new Error('category must be valid');
+    return !!result;
+  }
+
+  async insert(product: ProductM): Promise<ProductM> {
+    const resultCategory = await this.isValidCategory(product.categoryId);
+    if (!resultCategory)
+      this.exceptionService.notFoundException({
+        message: 'category must be valid',
+      });
 
     const newId = crypto.randomUUID();
     const result = await this.prismaService.product.create({
@@ -38,5 +50,37 @@ export class DatabaseProductRepository implements ProductRepository {
     });
 
     return result;
+  }
+
+  async updateContent(product: ProductM): Promise<ProductM> {
+    const resultCategory = await this.isValidCategory(product.categoryId);
+    if (!resultCategory)
+      this.exceptionService.notFoundException({
+        message: 'category must be valid',
+      });
+
+    const result = await this.prismaService.product.update({
+      where: {
+        id: product.id,
+      },
+      data: {
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        description: product.description,
+        categoryId: product.categoryId,
+      },
+    });
+
+    return result;
+  }
+
+  async deleteById(id: string): Promise<void> {
+    try {
+      await this.prismaService.product.delete({ where: { id } });
+      return;
+    } catch (error) {
+      this.exceptionService.badRequestException(error.message);
+    }
   }
 }

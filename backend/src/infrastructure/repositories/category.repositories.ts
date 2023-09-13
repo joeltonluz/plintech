@@ -33,9 +33,6 @@ export class DatabaseCategoryRepository implements CategoryRepository {
   }
 
   async findById(id: string): Promise<CategoryM> {
-    // const resultCategory = await this.prismaService.category.findUnique({
-    //   where: { id },
-    // });
     const resultCategory = await this.prismaService.category.findUnique({
       where: { id },
       include: {

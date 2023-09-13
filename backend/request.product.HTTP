@@ -4,7 +4,7 @@ GET http://localhost:3000/health-check
 GET http://localhost:3000/product
 
 ###
-GET http://localhost:3000/product/ca379e84-4bc8-447a-b22b-0fd94a132264
+GET http://localhost:3000/product/41af1693-ff4b-4d05-b353-844bec67d79f
 
 ###
 POST http://localhost:3000/product
@@ -14,16 +14,20 @@ content-type: application/json
     "name": "Lily McBride",
     "price": "3212.25",
     "description": "jpW1ZrfZBXld0mkd3h8gaaOQL3dyuW1uAqHiXP1VnBN87UzVmY",
-    "categoryId": "5bc954b1-6df9-4126-9224-56a82e897d43"
+    "categoryId": "5bc954b1-6df9-4126-9224-"
 }
 
 ###
-PUT http://localhost:3000/category/b6b82772-6d6c-4fe4-9d97-b51fe9b6e694
+PUT http://localhost:3000/product/42475d8e-2b3b-4813-ab47-cd8e0033c209
 content-type: application/json
 
 {
-    "name": "Categoria alterada"
+    "name": "Produto alterado",
+    "price": "3212.25",
+    "image": null,
+    "description": "_jpW1ZrfZBXld0mkd3h8gaaOQL3dyuW1uAqHiXP1VnBN87UzVmY",
+    "categoryId": "5bc954b1-6df9-4126-9224-56a82e897d4"
 }
 
 ###
-DELETE http://localhost:3000/category/b6b82772-6d6c-4fe4-9d97-b51fe9b6e694
+DELETE http://localhost:3000/product/8937f6ae-1777-49e7-af42-9a545c7b10c1
