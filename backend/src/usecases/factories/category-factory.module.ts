@@ -7,6 +7,7 @@ import {
   AddCategoriesUseCase,
   GetCategoriesUseCase,
   GetCategoryUseCase,
+  UpdateCategoryUseCase,
 } from '../category';
 
 @Module({
@@ -16,6 +17,7 @@ export class CategoryFactoryModule {
   static ADD_CATEGORY = 'addCategory';
   static GET_ALL_CATEGORIES = 'getAllCategories';
   static GET_CATEGORY = 'getCategory';
+  static PUT_CATEGORY = 'putCategory';
 
   static register(): DynamicModule {
     return {
@@ -45,11 +47,20 @@ export class CategoryFactoryModule {
             categoryRepository: DatabaseCategoryRepository,
           ) => new GetCategoryUseCase(logger, categoryRepository),
         },
+        {
+          inject: [LoggerService, DatabaseCategoryRepository],
+          provide: CategoryFactoryModule.PUT_CATEGORY,
+          useFactory: (
+            logger: LoggerService,
+            categoryRepository: DatabaseCategoryRepository,
+          ) => new UpdateCategoryUseCase(logger, categoryRepository),
+        },
       ],
       exports: [
         CategoryFactoryModule.ADD_CATEGORY,
         CategoryFactoryModule.GET_ALL_CATEGORIES,
         CategoryFactoryModule.GET_CATEGORY,
+        CategoryFactoryModule.PUT_CATEGORY,
       ],
     };
   }
