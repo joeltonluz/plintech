@@ -3,11 +3,8 @@
 @idCategory = 650209aded4a57ac70978d87
 
 
-### HEALTH CHECK
-GET {{apiUrl}}/health-check
-
-### GET LIST OF CATEGORY
-GET {{apiUrl}}/category
+### GET LIST OF MENU
+GET {{apiUrl}}/menu
 
 ### GET ONE CATEGORY
 GET {{apiUrl}}/category/{{idCategory}}

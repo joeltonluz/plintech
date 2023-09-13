@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CategoryRepository } from 'src/domain/repositories';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { CategoryM } from 'src/domain/model';
-import * as crypto from 'crypto';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 
 @Injectable()
@@ -13,7 +12,6 @@ export class DatabaseCategoryRepository implements CategoryRepository {
   ) {}
 
   async insert(categoryName: string): Promise<CategoryM> {
-    const newId = crypto.randomUUID();
     const result = await this.prismaService.category.create({
       data: {
         name: categoryName,
@@ -34,14 +32,14 @@ export class DatabaseCategoryRepository implements CategoryRepository {
   }
 
   async findById(id: string): Promise<CategoryM> {
-    const resultCategory = await this.prismaService.category.findUnique({
+    const result = await this.prismaService.category.findUnique({
       where: { id },
       include: {
         products: true,
       },
     });
 
-    return resultCategory;
+    return result;
   }
 
   async updateContent(id: string, name: string): Promise<CategoryM> {

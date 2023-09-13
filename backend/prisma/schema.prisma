@@ -23,22 +23,34 @@ model Category {
 }
 
 model Product {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   price       String //Decimal Field MongoDB https://github.com/prisma/prisma/issues/12637
   image       String?
   description String
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  String   @db.ObjectId
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  category    Category          @relation(fields: [categoryId], references: [id])
+  categoryId  String            @db.ObjectId
+  menus       ProductsInMenus[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Menu {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  period    PeriodMenu @unique @default(DAY)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id        String            @id @default(auto()) @map("_id") @db.ObjectId
+  period    PeriodMenu        @unique
+  products  ProductsInMenus[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model ProductsInMenus {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @db.ObjectId
+  menu      Menu    @relation(fields: [productId], references: [id])
+  menuId    String  @db.ObjectId
+
+  //   @@index([productId, menuId]) mongoose dont' work with @@id two id's
 }
 
 enum PeriodMenu {

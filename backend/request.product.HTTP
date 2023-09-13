@@ -1,7 +1,7 @@
 ### VARIABLES
 @apiUrl = http://localhost:3000
-@idCategory = "6501f88813f44bfa562947ad"
-@idProductUrl = 6501f89313f44bfa562947ae
+@idCategory = "650209aded4a57ac70978d87"
+@idProductUrl = 65020a3d4d35188f5d8c5e5a
 
 ###
 GET {{apiUrl}}/product
@@ -14,7 +14,7 @@ POST {{apiUrl}}/product
 content-type: application/json
 
 {
-    "name": "Big Burrito",
+    "name": "Tequila",
     "price": "9.00",
     "description": "MAeMvLFTuD4xE8iZKL79",
     "categoryId": {{idCategory}}

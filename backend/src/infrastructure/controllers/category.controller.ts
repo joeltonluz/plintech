@@ -7,10 +7,8 @@ import {
   HttpStatus,
   Inject,
   Param,
-  ParseBoolPipe,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
 import {
   AddCategoriesUseCase,

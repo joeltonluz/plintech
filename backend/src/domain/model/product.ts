@@ -1,3 +1,5 @@
+import { MenuM } from './menu';
+
 export class ProductM {
   id: string;
   name: string;
@@ -5,4 +7,5 @@ export class ProductM {
   image?: string; //base64?
   description: string;
   categoryId: string;
+  menu?: MenuM[];
 }
