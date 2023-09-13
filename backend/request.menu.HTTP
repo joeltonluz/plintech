@@ -1,6 +1,6 @@
 ### VARIABLES
 @apiUrl = http://localhost:3000
-@idMenu = 65021fd9ea5c54b52a6e2974
+@idMenu = 65022290960a722f094ec5f5
 
 
 ### GET LIST OF MENU
@@ -14,10 +14,11 @@ POST {{apiUrl}}/menu
 content-type: application/json
 
 {
-    "period": "DAY",
+    "period": "NIGHT",
     "products": [
         "650201a12f9694f46ee25855",
-        "650201b02f9694f46ee25856"
+        "650201b02f9694f46ee25856",
+        "65020a3d4d35188f5d8c5e5a"
     ]
 }
 
