@@ -1,14 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { MenuRepository } from 'src/domain/repositories';
 import { PrismaService } from '../database/prisma/prisma.service';
-import { MenuM, ProductM } from 'src/domain/model';
+import { MenuM } from 'src/domain/model';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 
-interface IMenu {
-  id: string;
-  period: string;
-  products: ProductM[];
-}
 @Injectable()
 export class DatabaseMenuRepository implements MenuRepository {
   constructor(
@@ -73,6 +68,8 @@ export class DatabaseMenuRepository implements MenuRepository {
         },
       });
 
+      console.log('resultProducts', resultProducts);
+
       resultMenus.push({
         id: menu.id,
         period: menu.period,
@@ -81,6 +78,47 @@ export class DatabaseMenuRepository implements MenuRepository {
     }
 
     result.push(...resultMenus);
+
+    return result;
+  }
+
+  async findById(id: string): Promise<MenuM> {
+    const resultMenu = await this.prismaService.menu.findUnique({
+      where: { id },
+    });
+
+    if (!resultMenu) return;
+
+    const resultProdInMenu = await this.prismaService.productsInMenus.findMany({
+      where: {
+        menuId: resultMenu.id,
+      },
+      select: {
+        productId: true,
+      },
+    });
+
+    const productList: string[] = [];
+    for (const product of resultProdInMenu) {
+      productList.push(product.productId);
+    }
+
+    const resultProducts = await this.prismaService.product.findMany({
+      where: {
+        id: { in: productList },
+      },
+      include: {
+        category: true,
+      },
+    });
+
+    console.log('products', resultProducts);
+
+    const result: any = {
+      id: resultMenu.id,
+      period: resultMenu.period,
+      products: [...resultProducts],
+    };
 
     return result;
   }

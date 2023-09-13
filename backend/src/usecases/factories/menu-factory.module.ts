@@ -3,7 +3,7 @@ import { LoggerModule } from 'src/infrastructure/logger/logger.module';
 import { LoggerService } from 'src/infrastructure/logger/logger.service';
 import { DatabaseMenuRepository } from 'src/infrastructure/repositories/menu.repositories';
 import { RepositoriesModule } from 'src/infrastructure/repositories/repositories.module';
-import { AddMenuUseCase, GetMenusUseCase } from '../menu';
+import { AddMenuUseCase, GetMenuUseCase, GetMenusUseCase } from '../menu';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule],
@@ -11,6 +11,7 @@ import { AddMenuUseCase, GetMenusUseCase } from '../menu';
 export class MenuFactoryModule {
   static ADD_MENU = 'addMenu';
   static GET_MENUS = 'getMenus';
+  static GET_MENU = 'getMenu';
 
   static register(): DynamicModule {
     return {
@@ -32,8 +33,20 @@ export class MenuFactoryModule {
             menuRepository: DatabaseMenuRepository,
           ) => new GetMenusUseCase(logger, menuRepository),
         },
+        {
+          inject: [LoggerService, DatabaseMenuRepository],
+          provide: MenuFactoryModule.GET_MENU,
+          useFactory: (
+            logger: LoggerService,
+            menuRepository: DatabaseMenuRepository,
+          ) => new GetMenuUseCase(logger, menuRepository),
+        },
       ],
-      exports: [MenuFactoryModule.ADD_MENU, MenuFactoryModule.GET_MENUS],
+      exports: [
+        MenuFactoryModule.ADD_MENU,
+        MenuFactoryModule.GET_MENUS,
+        MenuFactoryModule.GET_MENU,
+      ],
     };
   }
 }
