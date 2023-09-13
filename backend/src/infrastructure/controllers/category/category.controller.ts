@@ -10,11 +10,10 @@ import {
   Res,
 } from '@nestjs/common';
 import {
+  AddCategoriesUseCase,
   GetCategoriesUseCase,
   GetCategoryUseCase,
 } from 'src/usecases/category';
-// import { GetCategoriesUseCase } from 'src/usecases/category/getCategories.usecase';
-//  import { GetCategoryUseCase } from 'src/usecases/category/getCategory.usecase';
 import { CategoryFactoryModule } from 'src/usecases/factories/category-factory.module';
 
 type CategoryDto = {
@@ -26,19 +25,19 @@ type AddCategoryDto = Omit<CategoryDto, 'id'>;
 @Controller('category')
 export class CategoryController {
   constructor(
-    // @Inject(CategoryFactoryModule.ADD_CATEGORY)
-    // private readonly addCategory: AddCategoriesUseCase,
+    @Inject(CategoryFactoryModule.ADD_CATEGORY)
+    private readonly addCategoryx: AddCategoriesUseCase,
     @Inject(CategoryFactoryModule.GET_ALL_CATEGORIES)
     private readonly getCategories: GetCategoriesUseCase,
     @Inject(CategoryFactoryModule.GET_CATEGORY)
     private readonly getCategory: GetCategoryUseCase,
   ) {}
 
-  // @Post()
-  // async AddCategory(@Body() categoryDto: AddCategoryDto) {
-  //   const result = await this.addCategory.execute(categoryDto);
-  //   return result;
-  // }
+  @Post()
+  async AddCategory(@Body() categoryDto: AddCategoryDto) {
+    const result = await this.addCategoryx.execute(categoryDto.name);
+    return result;
+  }
 
   @Get()
   async getAllCategories() {
