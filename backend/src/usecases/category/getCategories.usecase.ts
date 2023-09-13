@@ -2,7 +2,7 @@ import { ILogger } from 'src/domain/logger';
 import { CategoryM } from 'src/domain/model';
 import { CategoryRepository } from 'src/domain/repositories';
 
-export class CategoryGetAll {
+export class GetCategoriesUseCase {
   constructor(
     private readonly logger: ILogger,
     private readonly categoryRepository: CategoryRepository,

@@ -2,8 +2,8 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { LoggerModule } from 'src/infrastructure/logger/logger.module';
 import { LoggerService } from 'src/infrastructure/logger/logger.service';
 import { DatabaseCategoryRepository } from 'src/infrastructure/repositories/category.repositories';
-import { CategoryGetAll } from '../category/category-get-all';
 import { RepositoriesModule } from 'src/infrastructure/repositories/repositories.module';
+import { GetCategoriesUseCase } from '../category/getCategories.usecase';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule],
@@ -21,7 +21,7 @@ export class CategoryFactoryModule {
           useFactory: (
             logger: LoggerService,
             categoryRepository: DatabaseCategoryRepository,
-          ) => new CategoryGetAll(logger, categoryRepository),
+          ) => new GetCategoriesUseCase(logger, categoryRepository),
         },
       ],
       exports: [CategoryFactoryModule.GET_ALL_CATEGORIES],
