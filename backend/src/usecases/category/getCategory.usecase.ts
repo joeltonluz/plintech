@@ -9,7 +9,7 @@ export class GetCategoryUseCase {
   ) {}
 
   async execute(id: string): Promise<CategoryM> {
-    this.logger.log('Category', 'Find By Id');
+    this.logger.log('GetById UseCase', `Finding a Category ${id} `);
     return await this.categoryRepository.findById(id);
   }
 }
