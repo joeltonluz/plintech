@@ -2,3 +2,6 @@ GET http://localhost:3000/health-check
 
 ###
 GET http://localhost:3000/category
+
+###
+GET http://localhost:3000/category/5bc954b1-6df9-4126-9224-56a82e897d43

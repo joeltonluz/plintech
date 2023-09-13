@@ -8,7 +8,17 @@ export class DatabaseCategoryRepository implements CategoryRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   // async insert(category: CategoryM): Promise<CategoryM> {
-  //   const cate
+  //   const result = await this.prismaService.category.create({
+  //     data: {
+  //       id: crypto.randomUUID(),
+  //       name: category.name,
+  //     },
+  //   });
+  //   console.log('oolha só ', result);
+  //   return {
+  //     id: '123',
+  //     name: category.name,
+  //   };
   // }
 
   async findAll(): Promise<CategoryM[]> {
@@ -16,7 +26,11 @@ export class DatabaseCategoryRepository implements CategoryRepository {
     return allCategories;
   }
 
-  // async findById(id: string): Promise<CategoryM> {
-  //   console.log('implements');
-  // }
+  async findById(id: string): Promise<CategoryM> {
+    const result = await this.prismaService.category.findUnique({
+      where: { id },
+    });
+    console.log('Result', result);
+    return result;
+  }
 }
