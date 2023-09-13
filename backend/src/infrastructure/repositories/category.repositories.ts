@@ -43,10 +43,6 @@ export class DatabaseCategoryRepository implements CategoryRepository {
       },
     });
 
-    //const resultProductsCategory = await this.teste.findAll();
-
-    console.log('productsCategory');
-
     return resultCategory;
   }
 

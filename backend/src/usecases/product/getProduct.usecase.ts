@@ -9,7 +9,7 @@ export class GetProductUseCase {
   ) {}
 
   async execute(id: string): Promise<ProductM> {
-    this.logger.log('GetById UseCase', `Finding a Product ${id} `);
+    this.logger.log('Product UseCase', `Finding a Product ${id} `);
     return await this.productRepository.findById(id);
   }
 }
