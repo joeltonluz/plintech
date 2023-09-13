@@ -68,8 +68,6 @@ export class DatabaseMenuRepository implements MenuRepository {
         },
       });
 
-      console.log('resultProducts', resultProducts);
-
       resultMenus.push({
         id: menu.id,
         period: menu.period,
@@ -121,5 +119,18 @@ export class DatabaseMenuRepository implements MenuRepository {
     };
 
     return result;
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.prismaService.$transaction([
+      this.prismaService.productsInMenus.deleteMany({
+        where: {
+          menuId: id,
+        },
+      }),
+      this.prismaService.menu.delete({ where: { id } }),
+    ]);
+
+    return;
   }
 }
