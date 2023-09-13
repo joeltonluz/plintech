@@ -5,5 +5,5 @@ export interface CategoryRepository {
   findAll(): Promise<CategoryM[]>;
   findById(id: string): Promise<CategoryM>;
   updateContent(id: string, name: string): Promise<CategoryM>;
-  // deleteById(id: string): Promise<void>;
+  deleteById(id: string): Promise<void>;
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -11,6 +12,7 @@ import {
 } from '@nestjs/common';
 import {
   AddCategoriesUseCase,
+  DeleteCategoryUseCase,
   GetCategoriesUseCase,
   GetCategoryUseCase,
   UpdateCategoryUseCase,
@@ -34,6 +36,8 @@ export class CategoryController {
     private readonly getCategory: GetCategoryUseCase,
     @Inject(CategoryFactoryModule.PUT_CATEGORY)
     private readonly updateCategory: UpdateCategoryUseCase,
+    @Inject(CategoryFactoryModule.DEL_CATEGORY)
+    private readonly deleteCategory: DeleteCategoryUseCase,
   ) {}
 
   @Post()
@@ -59,5 +63,10 @@ export class CategoryController {
   async PutCategory(@Param('id') id: string, @Body() categoryDto: CategoryDto) {
     const result = this.updateCategory.execute(id, categoryDto.name);
     return result;
+  }
+
+  @Delete(':id')
+  async DelCategory(@Param('id') id: string) {
+    return this.deleteCategory.execute(id);
   }
 }

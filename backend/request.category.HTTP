@@ -21,3 +21,6 @@ content-type: application/json
 {
     "name": "Categoria alterada"
 }
+
+###
+DELETE http://localhost:3000/category/b6b82772-6d6c-4fe4-9d97-b51fe9b6e694

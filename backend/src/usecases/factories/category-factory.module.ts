@@ -5,6 +5,7 @@ import { DatabaseCategoryRepository } from 'src/infrastructure/repositories/cate
 import { RepositoriesModule } from 'src/infrastructure/repositories/repositories.module';
 import {
   AddCategoriesUseCase,
+  DeleteCategoryUseCase,
   GetCategoriesUseCase,
   GetCategoryUseCase,
   UpdateCategoryUseCase,
@@ -18,6 +19,7 @@ export class CategoryFactoryModule {
   static GET_ALL_CATEGORIES = 'getAllCategories';
   static GET_CATEGORY = 'getCategory';
   static PUT_CATEGORY = 'putCategory';
+  static DEL_CATEGORY = 'delCategory';
 
   static register(): DynamicModule {
     return {
@@ -55,12 +57,21 @@ export class CategoryFactoryModule {
             categoryRepository: DatabaseCategoryRepository,
           ) => new UpdateCategoryUseCase(logger, categoryRepository),
         },
+        {
+          inject: [LoggerService, DatabaseCategoryRepository],
+          provide: CategoryFactoryModule.DEL_CATEGORY,
+          useFactory: (
+            logger: LoggerService,
+            categoryRepository: DatabaseCategoryRepository,
+          ) => new DeleteCategoryUseCase(logger, categoryRepository),
+        },
       ],
       exports: [
         CategoryFactoryModule.ADD_CATEGORY,
         CategoryFactoryModule.GET_ALL_CATEGORIES,
         CategoryFactoryModule.GET_CATEGORY,
         CategoryFactoryModule.PUT_CATEGORY,
+        CategoryFactoryModule.DEL_CATEGORY,
       ],
     };
   }

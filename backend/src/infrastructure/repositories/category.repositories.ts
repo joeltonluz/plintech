@@ -48,4 +48,17 @@ export class DatabaseCategoryRepository implements CategoryRepository {
 
     return result;
   }
+
+  async deleteById(id: string): Promise<void> {
+    try {
+      const result = await this.prismaService.category.delete({
+        where: { id },
+      });
+
+      console.log('Result Delte', result);
+      return;
+    } catch (erro) {
+      throw erro;
+    }
+  }
 }
