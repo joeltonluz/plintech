@@ -10,6 +10,6 @@ export class GetMenusUseCase {
 
   async execute(): Promise<MenuM[]> {
     this.logger.log('Menu UseCase', `Finding all Menus`);
-    return await this.menuRepository.findAll();
+    return await this.menuRepository.find();
   }
 }

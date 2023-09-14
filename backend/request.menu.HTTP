@@ -1,9 +1,9 @@
 ### VARIABLES
 @apiUrl = http://localhost:3000
-@idMenu = 65023d7122e21ffcf10da9c4
+@idMenu = 650245ed1ed96030d2fc1eae
 
 
-### GET LIST OF MENU
+### GET LIST OF MENU BASEADO NA HORA
 GET {{apiUrl}}/menu
 
 ### GET ONE MENU
@@ -16,9 +16,7 @@ content-type: application/json
 {
     "period": "NIGHT", 
     "products": [
-        "650201a12f9694f46ee25855",
-        "650201b02f9694f46ee25856",
-        "65020a3d4d35188f5d8c5e5a"
+        "650242598b749dabdeaccebc"
     ]
 }
 
@@ -27,10 +25,10 @@ PUT {{apiUrl}}/menu/{{idMenu}}
 content-type: application/json
 
 {
-    "period": "NIGHT",
+    "period": "DAY",
     "products": [
-        "650201a12f9694f46ee25855",
-        "65020a3d4d35188f5d8c5e5a"
+        "650242598b749dabdeaccebc",
+        "650242618b749dabdeaccebd"
     ]
 }
 

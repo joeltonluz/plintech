@@ -3,6 +3,7 @@ import { MenuRepository } from 'src/domain/repositories';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { MenuM } from 'src/domain/model';
 import { ExceptionsService } from '../exceptions/exceptions.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class DatabaseMenuRepository implements MenuRepository {
@@ -10,6 +11,11 @@ export class DatabaseMenuRepository implements MenuRepository {
     private readonly prismaService: PrismaService,
     private readonly exceptionService: ExceptionsService,
   ) {}
+
+  getPeriodMoment(): string {
+    const hour = moment().hour();
+    return hour >= 18 || hour < 6 ? 'NIGHT' : 'DAY';
+  }
 
   async insert(menu: MenuM): Promise<MenuM> {
     const result = await this.prismaService.menu.create({
@@ -31,51 +37,69 @@ export class DatabaseMenuRepository implements MenuRepository {
     return result;
   }
 
-  async findAll(): Promise<MenuM[]> {
-    const result: MenuM[] = [];
+  async find(): Promise<MenuM[]> {
+    const result: any[] = [];
 
-    const arrayMenus = await this.prismaService.menu.findMany({
+    const resultMenu = await this.prismaService.menu.findUnique({
+      where: {
+        period: this.getPeriodMoment(),
+      },
       select: {
         id: true,
         period: true,
       },
     });
 
-    if (!arrayMenus) return;
+    if (!resultMenu) return;
 
-    const resultMenus: any[] = [];
-    for (const menu of arrayMenus) {
-      const resultProdInMenu =
-        await this.prismaService.productsInMenus.findMany({
+    const resultProdInMenu = await this.prismaService.productsInMenus.findMany({
+      where: {
+        menuId: resultMenu.id,
+      },
+      select: {
+        productId: true,
+      },
+    });
+
+    const productList = [
+      ...new Set(resultProdInMenu.map((product) => product.productId)),
+    ];
+
+    const resultProducts = await this.prismaService.product.findMany({
+      where: {
+        id: { in: productList },
+      },
+      include: {
+        category: true,
+      },
+    });
+
+    const categoriesList = [
+      ...new Set(resultProducts.map((product) => product.categoryId)),
+    ];
+
+    const resultCategories = await this.prismaService.category.findMany({
+      where: {
+        id: {
+          in: [...categoriesList],
+        },
+      },
+      include: {
+        products: {
           where: {
-            menuId: menu.id,
+            id: {
+              in: [...productList],
+            },
           },
-          select: {
-            productId: true,
-          },
-        });
-
-      const productList: string[] = [];
-      for (const product of resultProdInMenu) {
-        productList.push(product.productId);
-      }
-      const resultProducts = await this.prismaService.product.findMany({
-        where: {
-          id: { in: productList },
         },
-        include: {
-          category: true,
-        },
-      });
+      },
+    });
 
-      resultMenus.push({
-        id: menu.id,
-        period: menu.period,
-        products: [...resultProducts],
-      });
-    }
-
-    result.push(...resultMenus);
+    result.push({
+      id: resultMenu.id,
+      period: resultMenu.period,
+      products: [...resultCategories],
+    });
 
     return result;
   }
