@@ -16,6 +16,7 @@ import ToastContainerWrapper from "@/components/toastify/toastify";
 import LoadingWeather from "@/components/weather/loadingWeather";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Footer from "@/components/weather/footer";
 
 export default function Weather() {
   const [isLoading, setIsLoading] = useState(true)
@@ -108,26 +109,7 @@ export default function Weather() {
                 className="text-red-700 animate-bounce"
               />
             </CardContent>
-            <CardFooter className="flex items-center justify-between">
-              <div className="flex items-center">
-                <FaWind size={24}/>
-                <p className="text-xs font-semibold">
-                  {weatherInfo!.data.current.wind_kph}km/h
-                </p>
-              </div>
-              <div className="flex items-center">
-                <IoWater size={24}/>
-                <p className="text-xs font-semibold">
-                  {weatherInfo!.data.current.humidity}%
-                </p>
-              </div>
-              <div className="flex items-center">
-                <IoCloudy size={24}/>
-                <p className="text-xs font-semibold ml-1">
-                  {weatherInfo!.data.current.cloud}%
-                </p>
-              </div>
-            </CardFooter>
+            < Footer data={weatherInfo!.data}/>
           </Card>
         </div>
       )}
