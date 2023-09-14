@@ -1,6 +1,6 @@
 ### VARIABLES
 @apiUrl = http://localhost:3000
-@idCategory = 650209aded4a57ac70978d87
+@idCategory = 650241d08b749dabdeacceb9
 
 
 ### HEALTH CHECK
@@ -25,7 +25,7 @@ PUT {{apiUrl}}/category/{{idCategory}}
 content-type: application/json
 
 {
-    "name": "Drinks"
+    "name": "Pizzas"
 }
 
 ### DELETE ONE CATEGORY

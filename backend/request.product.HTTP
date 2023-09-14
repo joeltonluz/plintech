@@ -1,7 +1,7 @@
 ### VARIABLES
 @apiUrl = http://localhost:3000
-@idCategory = "650209aded4a57ac70978d87"
-@idProductUrl = 65020a3d4d35188f5d8c5e5a
+@idCategory = "650241fa8b749dabdeaccebb"
+@idProductUrl = 650242618b749dabdeaccebd
 
 ###
 GET {{apiUrl}}/product
@@ -14,9 +14,9 @@ POST {{apiUrl}}/product
 content-type: application/json
 
 {
-    "name": "Tequila",
+    "name": "Garrafa de àgua gasosa",
     "price": "9.00",
-    "description": "MAeMvLFTuD4xE8iZKL79",
+    "description": "500ml",
     "categoryId": {{idCategory}}
 }
 
@@ -25,10 +25,9 @@ PUT {{apiUrl}}/product/{{idProductUrl}}
 content-type: application/json
 
 {
-    "name": "Standar",
-    "price": "7.00",
-    "image": null,
-    "description": "jpW1ZrfZBXld0mkd3h8gaaOQL3dyuW1uAqHiXP1VnBN87UzVmY",
+    "name": "X Tudo",
+    "price": "19.00",
+    "description": "Pão, Hamburguer, Ovo",
     "categoryId": {{idCategory}}
 }
 

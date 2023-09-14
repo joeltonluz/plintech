@@ -35,4 +35,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # Files of Projects or PC Dev
-.env*
+.env
