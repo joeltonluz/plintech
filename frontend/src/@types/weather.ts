@@ -42,3 +42,9 @@ export type WeatherInfoProps = {
 
   }
 }
+
+export type Props = {
+  typeTemp: any;
+  setTypeTemp: any;
+  weatherInfo: WeatherInfoProps;
+}
